@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "Redis.IngestExample": {
+      "commandName": "Project",
+      "commandLineArgs": "--port 7218",
+      "launchBrowser": false
+    }
+  }
+}
