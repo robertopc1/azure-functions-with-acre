@@ -2,6 +2,7 @@ using System.Data;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using Dapper;
+using Shared;
 
 
 namespace DataAccess.DbAccess;
@@ -18,7 +19,7 @@ public class SQLDataAccess : ISQLDataAccess
     public async Task SaveData<T>(
         string storedProcedure,
         T parameters,
-        string connectionId = "SQLConnectionString")
+        string connectionId = Common.SQLConnectionString)
     {
         using IDbConnection connection = new SqlConnection(_config[connectionId]);
 

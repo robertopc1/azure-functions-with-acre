@@ -1,5 +1,6 @@
 using DataAccess.DbAccess;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Redis.OM;
@@ -12,7 +13,7 @@ var host = new HostBuilder()
     .ConfigureServices((hostContext, services) =>
     {
         IConfiguration configuration = hostContext.Configuration;
-        string redisConnectionString = configuration["RedisConnectionString"];
+        string redisConnectionString = configuration["ConnectionStrings:RedisConnectionString"] ?? throw new ArgumentNullException(nameof(configuration));
         
         var redisMultiplexer = ConnectionMultiplexer.Connect($"{redisConnectionString}"); // Replace with your Redis server connection details
         var provider = new RedisConnectionProvider(redisMultiplexer);
@@ -25,6 +26,9 @@ var host = new HostBuilder()
         services.AddSingleton<IRedisConnectionProvider>(provider);
         services.AddSingleton<ISQLDataAccess, SQLDataAccess>();
         services.AddSingleton<IStylesData, StylesData>();
+        
+        services.AddApplicationInsightsTelemetryWorkerService();
+        services.ConfigureFunctionsApplicationInsights();
     })
     .Build();
 

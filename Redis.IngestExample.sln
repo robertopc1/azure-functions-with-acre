@@ -4,7 +4,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Redis.IngestExample", "Redi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{007EB67C-971B-4238-8402-AE55F21CE3EF}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQL", "SQL", "{7F8E46E2-4418-48F7-A9DE-3B5C7B943B95}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Redis.WriteBehindExample", "Redis.WriteBehindExample\Redis.WriteBehindExample.csproj", "{49B98996-B7CB-43D3-B911-E15EAF98CF74}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{ADE843EE-ADE5-41AD-8611-F92023D8E5F7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,5 +22,15 @@ Global
 		{007EB67C-971B-4238-8402-AE55F21CE3EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{007EB67C-971B-4238-8402-AE55F21CE3EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{007EB67C-971B-4238-8402-AE55F21CE3EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49B98996-B7CB-43D3-B911-E15EAF98CF74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49B98996-B7CB-43D3-B911-E15EAF98CF74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49B98996-B7CB-43D3-B911-E15EAF98CF74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49B98996-B7CB-43D3-B911-E15EAF98CF74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ADE843EE-ADE5-41AD-8611-F92023D8E5F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADE843EE-ADE5-41AD-8611-F92023D8E5F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ADE843EE-ADE5-41AD-8611-F92023D8E5F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ADE843EE-ADE5-41AD-8611-F92023D8E5F7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
 	EndGlobalSection
 EndGlobal

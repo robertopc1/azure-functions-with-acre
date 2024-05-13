@@ -1,5 +1,6 @@
 using DataAccess.DbAccess;
 using DataAccess.Models;
+using Shared;
 
 namespace DataAccess.Data;
 
@@ -13,5 +14,5 @@ public class StylesData : IStylesData
     }
 
     public Task UpdateStyle(Styles style) =>
-        _db.SaveData("[aidemo].spStyles_Update", style);
+        _db.SaveData(Common.StoreProcedureUpdate, style);
 }
