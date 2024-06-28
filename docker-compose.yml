@@ -1,0 +1,70 @@
+﻿services:
+  sql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sql2022
+    hostname: sql2022
+    ports:
+      - "1433:1433"
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD}
+    networks:
+      - sql_network
+    
+  redis.api:
+    image: redis.api
+    container_name: redis.api
+    ports:
+      - 8080:8080
+    build:
+      context: ./src
+      additional_contexts:
+        datafile: ./infra/sql
+      dockerfile: Redis.API/Dockerfile      
+    env_file:
+      - .env
+    environment:
+      - ConnectionStrings__SQLConnectionString=${SQLConnectionString}
+      - ConnectionStrings__RedisConnectionString=${RedisConnectionString}
+    depends_on:
+      - sql
+    networks:
+      - sql_network
+
+  local.storage.emulator:
+    image: "mcr.microsoft.com/azure-storage/azurite:latest"
+    container_name: local.storage.emulator
+    ports:
+      - 10000:10000
+      - 10001:10001
+
+  local.functions:
+    container_name: local.functions
+    build:
+      context: ./src
+      dockerfile: Redis.IngestExample/Dockerfile
+      args:
+        AzureWebJobsStorage: ${AzureWebJobsStorage}
+        FUNCTIONS_WORKER_RUNTIME: ${FUNCTIONS_WORKER_RUNTIME}
+    ports:
+      - 8081:80
+    env_file:
+      - .env
+    environment:
+      # Copy .env variables through to container
+      - AzureWebJobsStorage=${AzureWebJobsStorage}
+      - FUNCTIONS_WORKER_RUNTIME=${FUNCTIONS_WORKER_RUNTIME}
+      - ConnectionStrings__SQLConnectionString=${SQLConnectionString}
+      - ConnectionStrings__RedisConnectionString=${RedisConnectionString}
+    depends_on:
+      - local.storage.emulator
+      - sql
+      - redis.api
+    networks:
+      - sql_network
+
+networks:
+  sql_network:
+    driver: bridge
+      
+      

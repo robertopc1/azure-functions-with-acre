@@ -1,0 +1,54 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Redis.API", "src\Redis.API\Redis.API.csproj", "{685F008A-AE32-4D52-8620-78A242B26EF1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Redis.Functions.DataAccess", "src\Redis.Functions.DataAccess\Redis.Functions.DataAccess.csproj", "{DCA45628-6A2C-45E3-AD1C-132A078C95F7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Redis.Functions.Shared", "src\Redis.Functions.Shared\Redis.Functions.Shared.csproj", "{82549D97-08E0-43E0-8EAC-32582EC8B5F1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Redis.IngestExample", "src\Redis.IngestExample\Redis.IngestExample.csproj", "{295BDAD9-0048-4CA1-84BA-346B6F325856}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Redis.WriteBehindExample", "src\Redis.WriteBehindExample\Redis.WriteBehindExample.csproj", "{DBD522FE-6FF0-4810-8F51-557FBE8C5625}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Redis.Domain", "src\Redis.Domain\Redis.Domain.csproj", "{4358DC80-53AB-438E-9607-D0888DAF242D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Redis.Infrastructure", "src\Redis.Infrastructure\Redis.Infrastructure.csproj", "{1185AD6A-4D09-4305-9C30-E28967A42B5E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{685F008A-AE32-4D52-8620-78A242B26EF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{685F008A-AE32-4D52-8620-78A242B26EF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{685F008A-AE32-4D52-8620-78A242B26EF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{685F008A-AE32-4D52-8620-78A242B26EF1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DCA45628-6A2C-45E3-AD1C-132A078C95F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCA45628-6A2C-45E3-AD1C-132A078C95F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCA45628-6A2C-45E3-AD1C-132A078C95F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCA45628-6A2C-45E3-AD1C-132A078C95F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82549D97-08E0-43E0-8EAC-32582EC8B5F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82549D97-08E0-43E0-8EAC-32582EC8B5F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82549D97-08E0-43E0-8EAC-32582EC8B5F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82549D97-08E0-43E0-8EAC-32582EC8B5F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{295BDAD9-0048-4CA1-84BA-346B6F325856}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{295BDAD9-0048-4CA1-84BA-346B6F325856}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{295BDAD9-0048-4CA1-84BA-346B6F325856}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{295BDAD9-0048-4CA1-84BA-346B6F325856}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBD522FE-6FF0-4810-8F51-557FBE8C5625}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBD522FE-6FF0-4810-8F51-557FBE8C5625}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBD522FE-6FF0-4810-8F51-557FBE8C5625}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBD522FE-6FF0-4810-8F51-557FBE8C5625}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4358DC80-53AB-438E-9607-D0888DAF242D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4358DC80-53AB-438E-9607-D0888DAF242D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4358DC80-53AB-438E-9607-D0888DAF242D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4358DC80-53AB-438E-9607-D0888DAF242D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1185AD6A-4D09-4305-9C30-E28967A42B5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1185AD6A-4D09-4305-9C30-E28967A42B5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1185AD6A-4D09-4305-9C30-E28967A42B5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1185AD6A-4D09-4305-9C30-E28967A42B5E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+	EndGlobalSection
+EndGlobal
