@@ -21,7 +21,7 @@ public class Startup
      {
           services
                .AddCustomDbContext(Configuration);
-
+       
           var redisConnection = ConnectionMultiplexer.Connect(Configuration.GetConnectionString("RedisConnectionString"));
           var provider = new RedisConnectionProvider(redisConnection);
           provider.Connection.CreateIndex(typeof(RedisProduct));

@@ -37,6 +37,8 @@
     ports:
       - 10000:10000
       - 10001:10001
+    networks:
+      - sql_network
 
   local.functions:
     container_name: local.functions
@@ -46,6 +48,7 @@
       args:
         AzureWebJobsStorage: ${AzureWebJobsStorage}
         FUNCTIONS_WORKER_RUNTIME: ${FUNCTIONS_WORKER_RUNTIME}
+        Sql_Trigger_MaxBatchSize: ${Sql_Trigger_MaxBatchSize}
     ports:
       - 8081:80
     env_file:

@@ -8,6 +8,8 @@ riderModule.iml
 # Azure Functions localsettings file
 local.settings.json
 
+appsettings.Local.json
+
 # User-specific files
 *.suo
 *.user

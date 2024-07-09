@@ -9,8 +9,10 @@ ARG RedisConnectionString
 # Set environment variables using the build arguments
 ENV AzureWebJobsStorage=$AzureWebJobsStorage
 ENV FUNCTIONS_WORKER_RUNTIME=$FUNCTIONS_WORKER_RUNTIME
+ENV Sql_Trigger_MaxBatchSize=$Sql_Trigger_MaxBatchSize
 ENV ConnectionStrings__SQLConnectionString=$SQLConnectionString
 ENV ConnectionStrings__RedisConnectionString=$RedisConnectionString
+
 
 WORKDIR /src
 COPY Redis.IngestExample/ Redis.IngestExample/
@@ -24,6 +26,7 @@ EXPOSE 80
 # FROM mcr.microsoft.com/azure-functions/dotnet-isolated:4-dotnet-isolated8.0-appservice
 FROM mcr.microsoft.com/azure-functions/dotnet-isolated:4-dotnet-isolated8.0
 ENV AzureWebJobsScriptRoot=/home/site/wwwroot \
-    AzureFunctionsJobHost__Logging__Console__IsEnabled=true
+    AzureFunctionsJobHost__Logging__Console__IsEnabled=true \
+    DOTNET_EnableWriteXorExecute=0
 
 COPY --from=installer-env ["/home/site/wwwroot", "/home/site/wwwroot"]

@@ -1,7 +1,6 @@
 using System.Data;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.EntityFrameworkCore.Storage;
 using Redis.Domain.AggregatesModel.ProductAggregate;
 using Redis.Domain.Seedwork;
@@ -99,35 +98,6 @@ public class ProductContext : DbContext, IUnitOfWork
                 _currentTransaction.Dispose();
                 _currentTransaction = null;
             }
-        }
-    }
-}
-
-public class ProductContextDesignFactory : IDesignTimeDbContextFactory<ProductContext>
-{
-    public ProductContext CreateDbContext(string[] args)
-    {
-        var optionsBuilder = new DbContextOptionsBuilder<ProductContext>()
-            .UseSqlServer("Server=tcp:host.docker.internal,1433;Initial Catalog=RedisAiDb;Persist Security Info=False;User ID=sa;Password=Str0ngPa$$w0rd;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=true;Connection Timeout=30;");
-
-        return new ProductContext(optionsBuilder.Options, new NoMediator());
-    }
-
-    class NoMediator : IMediator
-    {
-        public Task Publish<TNotification>(TNotification notification, CancellationToken cancellationToken = default(CancellationToken)) where TNotification : INotification
-        {
-            return Task.CompletedTask;
-        }
-
-        public Task Publish(object notification, CancellationToken cancellationToken = default)
-        {
-            return Task.CompletedTask;
-        }
-
-        public Task<TResponse> Send<TResponse>(IRequest<TResponse> request, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return Task.FromResult<TResponse>(default(TResponse));
         }
     }
 }
