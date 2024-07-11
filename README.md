@@ -10,17 +10,20 @@ Redis Input Binding because at the moment the Redis Input Bindings only support 
 
 ## Features
 
+- CQRS
 - Ingest & Write-Behind patterns
 - Use Redis OM .Net to update data in ACRE
 - Use Pub/Sub Trigger from Azure Functions Redis Extensions to listen to key event notifications for Write-Behind pattern
-  - Will update to use streams instead
+  - *** Will update to use streams instead
 - Use SQL Trigger to listen for changes in Ingest pattern
 
 ## Architecture
+![Local Deployment](./images/local-deployment.png)
+![Azure Deployment](./images/azure-deployment.png)
 
 ## Prerequisites
 
-- VS Code or Visual Studio
+- VS Code/Visual Studio/Rider
 - .Net 8
 - OSX or Windows
 - Azure SQL
@@ -28,6 +31,7 @@ Redis Input Binding because at the moment the Redis Input Bindings only support 
 - Azure Cache for Redis Enterprise
   - Configuration steps [here](https://learn.microsoft.com/en-us/azure/azure-cache-for-redis/quickstart-create-redis-enterprise)
 - Redis Insight [here](https://redis.io/insight/)
+- Docker
 
 ## Installation
 

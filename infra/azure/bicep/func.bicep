@@ -39,6 +39,13 @@ param appiInstrumentationKey string = ''
 @description('Optional. Storage Account Name')
 param storageAccountName string = ''
 
+@description('Required. Caching Pattern')
+@allowed([
+    'Ingest'
+    'Write-Behind'
+])
+param cachingPattern string
+
 var resourceNames = {
   appServicePlanName: 'asp-${applicationName}-${location}-002'
   appServicePlan2Name: 'asp-${applicationName}-${location}-003'
@@ -68,7 +75,7 @@ resource appServicePlan 'Microsoft.Web/serverfarms@2022-03-01' = {
   }
 }
 
-resource appServicePlan2 'Microsoft.Web/serverfarms@2022-03-01' = {
+resource appServicePlan2 'Microsoft.Web/serverfarms@2022-03-01' = if(cachingPattern == 'Write-Behind') {
   name: resourceNames.appServicePlan2Name
   location: location
   tags: tags
@@ -140,7 +147,7 @@ resource funcIngest 'Microsoft.Web/sites@2022-03-01' = {
   }
 }
 
-resource funcWriteBehind 'Microsoft.Web/sites@2022-03-01' = {
+resource funcWriteBehind 'Microsoft.Web/sites@2022-03-01' = if(cachingPattern == 'Write-Behind') {
   name: resourceNames.funcWriteBehindName
   location: location
   tags: tags
@@ -202,12 +209,14 @@ resource appsettings 'Microsoft.Web/sites/config@2022-03-01' = {
     AzureWebJobStorage: 'DefaultEndpointsProtocol=https;AccountName=${storageAccountName};EndpointSuffix=${environment().suffixes.storage};AccountKey=${listKeys(storageAccount.id, '2021-09-01').keys[0].value}'
     APPINSIGHTS_INSTRUMENTATIONKEY: appiInstrumentationKey
     FUNCTIONS_EXTENSION_VERSION: '~4'
+    Sql_Trigger_MaxBatchSize: 1000
     ftpsState: 'Disabled'
     minTlsVersion: '1.2'
+    FUNCTIONS_WORKER_RUNTIME: 'dotnet-isolated'
   }
 }
 
-resource appsettings2 'Microsoft.Web/sites/config@2022-03-01' = {
+resource appsettings2 'Microsoft.Web/sites/config@2022-03-01' = if(cachingPattern == 'Write-Behind') {
   parent: funcWriteBehind
   name: 'appsettings'
   properties: {
@@ -216,6 +225,7 @@ resource appsettings2 'Microsoft.Web/sites/config@2022-03-01' = {
     FUNCTIONS_EXTENSION_VERSION: '~4'
     ftpsState: 'Disabled'
     minTlsVersion: '1.2'
+    FUNCTIONS_WORKER_RUNTIME: 'dotnet-isolated'
   }
 }
 

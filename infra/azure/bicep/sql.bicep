@@ -9,9 +9,15 @@ param tags object = {}
 @description('Optional. Administrator username')
 param adminUserName string = 'sql-admin'
 
+@description('Required. Administrator Password ')
+@secure()
+param adminPassword string
+
 @description('Required. Application name')
 param applicationName string
 
+@description('Required. Key Vault Name')
+param keyVaultName string
 
 var resourceNames = {
   sqlServerName: 'sql-${applicationName}-${location}'
@@ -25,6 +31,7 @@ resource sqlServer 'Microsoft.Sql/servers@2022-02-01-preview' = {
   tags: tags
   properties: {
     administratorLogin: adminUserName
+    administratorLoginPassword: adminPassword
     version: '12.0'
     minimalTlsVersion: '1.2'
     publicNetworkAccess: 'Enabled'
@@ -52,6 +59,13 @@ resource sqlServerDb 'Microsoft.Sql/servers/databases@2022-02-01-preview' = {
     isLedgerOn: false
   }
 }
+
+resource sqlConnectionString 'Microsoft.KeyVault/vaults/secrets@2019-09-01' = {
+  name: '${keyVaultName}/azureSqlConnectionString'  // The first part is KV's name
+  properties: {
+   value: 'Server=tcp:${resourceNames.sqlServerName}.database.windows.net,1433;Initial Catalog=${resourceNames.sqlServerDbName};Persist Security Info=False;User ID=${adminUserName};Password=${adminPassword};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;'
+  }
+ }
 
 output sqlServerName string = sqlServer.name
 output sqlServerDbName string = sqlServerDb.name
