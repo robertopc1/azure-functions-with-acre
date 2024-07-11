@@ -10,9 +10,10 @@ Redis Input Binding because at the moment the Redis Input Bindings only support 
 
 ## Features
 
-- Ingest & Write-Nehind patterns
+- Ingest & Write-Behind patterns
 - Use Redis OM .Net to update data in ACRE
 - Use Pub/Sub Trigger from Azure Functions Redis Extensions to listen to key event notifications for Write-Behind pattern
+  - Will update to use streams instead
 - Use SQL Trigger to listen for changes in Ingest pattern
 
 ## Architecture
@@ -32,13 +33,15 @@ Redis Input Binding because at the moment the Redis Input Bindings only support 
 
 ### Azure SQL
 
-Run SQL Script to create table:
+Option 1: Run SQL Script to create table:
 
 1. Copy the contents of the script named "CreateStylesTable.sql". The file is located inside the SQL folder located in the Solution Items folder.
 
 2. Open the query editor of your preferred database tool (Azure Data Studio or SQL Server Management Studio) and paste the SQL script copied during Step 1.
 
 3. Run the script to create the table.
+
+Option 2: When the application starts it will use EF migrations to create schema, database and load the sample data if table is empty
 
 ## Quickstart
 
@@ -82,3 +85,26 @@ git clone https://github.com/robertopc1/azure-functions-with-acre
    
     After running the Azure function, you can make an update to any of the Redis JSON document using Redis Insight or Redis CLI.
     The Azure Function will trigger and push the updated record into Azure SQL.
+
+## Run with Docker Compose
+
+1. Create a .env file with the variables below and populate them with the correct information
+```text
+AzureWebJobsStorage=UseDevelopmentStorage=true
+FUNCTIONS_WORKER_RUNTIME=dotnet-isolated
+SQLConnectionString=
+RedisConnectionString=
+MSSQL_SA_PASSWORD=
+Sql_Trigger_MaxBatchSize=1000
+```
+
+2. Run 
+ ```sh
+    docker compose up
+```
+
+Docker compose will the following containerized service:
+- SQLServer 2022
+- Redis.API (Sample Api)
+- Azurite
+- Ingest Function App
