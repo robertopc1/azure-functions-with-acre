@@ -4,6 +4,8 @@
 This a demo of how can you implement the Ingest and Write-Behind caching patterns using the Azure Functions Redis Extensions,
 Redis Enterprise & Azure SQL.
 
+## Notes
+
 At the moment we haven't implemented the Ingest Pattern with Redis Output Binding because Azure Cache for Redis Enterprise (ACRE)
 is running version 2.4 of RediSearch and JSON.MSET support is at 2.6. We will update this soon since upgrade to 7.2 is in public preview. We also haven't implemented the Write-Behind pattern using
 Redis Input Binding because at the moment the Redis Input Bindings only support single output commands [here](https://github.com/Azure/azure-functions-redis-extension/blob/main/src/Microsoft.Azure.WebJobs.Extensions.Redis/Bindings/RedisAsyncConverter.cs#L63). We are using Redis OM .Net to update our data.
