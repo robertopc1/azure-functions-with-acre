@@ -3,15 +3,15 @@ using Redis.Domain.AggregatesModel.ProductAggregate;
 
 namespace Redis.API.Application.Commands;
 
-public class CreateProductCommandHandler 
+public class CreateProductEFCommandHandler 
     : IRequestHandler<CreateProductCommand, bool>
 {
     private readonly IMediator _mediator;
-    private readonly ILogger<CreateProductCommandHandler> _logger;
+    private readonly ILogger<CreateProductEFCommandHandler> _logger;
     private readonly IProductRepository _productRepository;
 
-    public CreateProductCommandHandler(IMediator mediator, 
-        ILogger<CreateProductCommandHandler> logger,
+    public CreateProductEFCommandHandler(IMediator mediator, 
+        ILogger<CreateProductEFCommandHandler> logger,
         IProductRepository productRepository)
     {
         _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));

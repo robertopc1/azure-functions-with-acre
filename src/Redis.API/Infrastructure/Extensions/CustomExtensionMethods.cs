@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Polly;
 using Redis.API.Application.Behaviors;
 using Redis.API.Application.Commands;
+using Redis.API.Application.Queries;
 using Redis.Infrastructure;
 
 namespace Redis.API.Infrastructure.Extensions;
@@ -40,14 +41,22 @@ public static class CustomExtensionMethods
         return services;
     }
     
-    public static IServiceCollection AddCustomMediatR(this IServiceCollection services)
+    public static IServiceCollection AddCustomMediatR(this IServiceCollection services, bool useWriteBehind)
     {
         // Register MediatR
-        services.AddMediatR(typeof(IMediator).GetTypeInfo().Assembly);
+        services.AddMediatR(typeof(GetProductByIdQuery).Assembly);
 
-        // Register all the Command classes (they implement IRequestHandler) in assembly holding the Commands
-        services.AddMediatR(typeof(CreateProductCommand).GetTypeInfo().Assembly);
-        
+        // Register the Command classes (they implement IRequestHandler)
+    
+        if (useWriteBehind)
+        {
+            services.AddTransient<IRequestHandler<CreateProductCommand, bool>, CreateProductWBCommandHandler>();
+        }
+        else
+        {
+            services.AddTransient<IRequestHandler<CreateProductCommand, bool>, CreateProductEFCommandHandler>();
+        }
+
         // Register the DomainEventHandler classes (they implement INotificationHandler<>) in assembly holding the Domain Events
         //services.AddMediatR(typeof(ValidateOrAddBuyerAggregateWhenOrderStartedDomainEventHandler).GetTypeInfo().Assembly);
 

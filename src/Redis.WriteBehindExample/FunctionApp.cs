@@ -48,12 +48,22 @@ public class FunctionApp
     public async Task WriteBehindStreams(
         [RedisStreamTrigger(Common.RedisConnectionString, Common.Key)] Common.StreamMessage  streamMessage)
     {
-        var key = streamMessage.Values.ProductId;
+        var key = streamMessage.Values.Id;
 
         var value = await _stylesCollection.FindByIdAsync(key);
 
-        if (value != null)
-            await _data.UpdateStyle(value);
+        try
+        {
+            if (value != null)
+            {
+                await _data.UpdateStyle(value);
+            }
+
+        }
+        catch(Exception ex)
+        {
+           // Handle what happens if we fail to Insert in SQL   
+        }
         
         //Log the time that the function was executed.
         _logger.LogInformation($"C# Redis trigger function executed at: {DateTime.Now}");

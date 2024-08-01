@@ -55,4 +55,9 @@ public class CreateProductCommand : IRequest<bool>
         Usage = usage;
         ProductDisplayName = productDisplayName;
     }
+
+    public void SetId(int id)
+    {
+        Id = id;
+    }
 }
