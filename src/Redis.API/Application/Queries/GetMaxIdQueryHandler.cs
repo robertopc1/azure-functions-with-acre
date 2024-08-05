@@ -1,20 +1,19 @@
 using AutoMapper;
 using MediatR;
 using Redis.API.Application.Queries.DTOs;
-using Redis.Domain.AggregatesModel.ProductAggregate;
 using Redis.OM.Contracts;
 using Redis.OM.Searching;
 
 namespace Redis.API.Application.Queries;
 
-public class GetProductByIdQueryHandler : IRequestHandler<GetProductByIdQuery, RedisProductDTO>
+public class GetMaxIdQueryHandler : IRequestHandler<GetMaxIdQuery, int>
 {
     private readonly ILogger<GetProductByIdQueryHandler> _logger;
     private readonly IMapper _mapper;
     private readonly IRedisConnectionProvider _provider;
     private readonly IRedisCollection<RedisProduct> _productCollection;
     
-    public GetProductByIdQueryHandler(IMapper mapper, 
+    public GetMaxIdQueryHandler(IMapper mapper, 
         ILogger<GetProductByIdQueryHandler> logger,
         IRedisConnectionProvider provider)
     {
@@ -24,14 +23,12 @@ public class GetProductByIdQueryHandler : IRequestHandler<GetProductByIdQuery, R
         _productCollection = _provider.RedisCollection<RedisProduct>();
     }
     
-    public async Task<RedisProductDTO> Handle(GetProductByIdQuery message, CancellationToken cancellationToken)
+    public async Task<int> Handle(GetMaxIdQuery message, CancellationToken cancellationToken)
     {
-        _logger.LogInformation("----- Getting Product - Product Id: {@Product}", message);
+        _logger.LogInformation("----- Getting Max Id: {@Id}", message);
 
-        var product = await _productCollection.FirstOrDefaultAsync(x => x.Id == message.Id); 
+        var id =  _productCollection.Max(x => x.Id); 
 
-        var productDto = _mapper.Map<RedisProductDTO>(product);
-
-        return productDto;
+        return id;
     }
 }

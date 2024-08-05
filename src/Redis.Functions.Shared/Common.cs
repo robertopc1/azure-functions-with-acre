@@ -7,7 +7,7 @@ public class Common
     public const string SubscriptionChannel = "__keyevent@0__:json.set";
     public const string StoreProcedureUpdate = "[aidemo].spStyles_Update";
     public const string TableName = "[aidemo].[styles]";
-    public const string Key = "streamExample";
+    public const string Key = "wb-stream";
     
     public class ChannelMessage
     {
@@ -24,6 +24,6 @@ public class Common
 
     public class Product
     {
-        public string ProductId { get; set; }
+        public string Id { get; set; }
     }
 }
