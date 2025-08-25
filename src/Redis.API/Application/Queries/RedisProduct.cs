@@ -9,9 +9,9 @@ namespace Redis.API.Application.Queries;
 
 public class RedisProduct
 {
-    [JsonPropertyName("id")]
     [RedisIdField]
-    [Indexed (PropertyName = "id")]
+    [JsonPropertyName("id")]
+    [Indexed(PropertyName = "id")]
     public int Id { get; set; }
 
     [JsonPropertyName("gender")]

@@ -4,7 +4,9 @@ using Microsoft.Extensions.Logging;
 using Redis.OM.Contracts;
 using Redis.OM.Searching;
 using Redis.Functions.Shared;
-
+using System.Text;
+using Microsoft.Azure.Functions.Worker.Extensions.Redis;
+using System.Text.Json;
 
 namespace Redis.IngestExample;
 
@@ -26,43 +28,54 @@ public class FunctionApp
     }
     
     // Visit https://aka.ms/sqltrigger to learn how to use this trigger binding
-    [Function("IngestWithOmExample")]
-    public async Task Run(
-        [SqlTrigger(Common.TableName, Common.SQLConnectionString)] 
-        IReadOnlyList<SqlChange<Styles>> changes) 
-    {
-        _logger.LogInformation($"Entered the Azure Function --- {DateTime.Now}");
+    // [Function("IngestWithOmExample")]
+    // public async Task Run(
+    //     [SqlTrigger(Common.TableName, Common.SQLConnectionString)] 
+    //     IReadOnlyList<SqlChange<Styles>> changes) 
+    // {
+    //     _logger.LogInformation($"Entered the Azure Function --- {DateTime.Now}");
         
-        IEnumerable<Styles> changeList = changes    
-            .Select<SqlChange<Styles>, Styles>(change => change.Item);
+    //     IEnumerable<Styles> changeList = changes    
+    //         .Select<SqlChange<Styles>, Styles>(change => change.Item);
 
-        if (changeList.Any())
-            await _stylesCollection.InsertAsync(changeList);
+    //     if (changeList.Any())
+    //         await _stylesCollection.InsertAsync(changeList);
         
-        _logger.LogInformation($"Finished updating {DateTime.Now}");
-    }
+    //     _logger.LogInformation($"Finished updating {DateTime.Now}");
+    // }
     
     //*** WIP ****//
     // JSON.MSET is supported in RedisJson 2.6 ACRE is currently in 2.4.
     // Since we can't use JSON.MSET to send all the keys that have been updated in SQL
     // We will update the code once ACRE gets upgraded to a later version
-    // [Function("IngestWithInputBiding")]
-    // [RedisOutput(Common.RedisConnectionString, "JSON.SET")]
-    // public string Run(
-    //     [SqlTrigger("[aidemo].[styles]", Common.SQLConnectionString)]
-    //     IReadOnlyList<SqlChange<Styles>> changes)
-    // {
-    //     IEnumerable<Styles> changeList = changes.Select<SqlChange<Styles>, Styles>(change => change.Item);
-    //
-    //     StringBuilder jsonStringCollection = new StringBuilder();
-    //     
-    //     foreach (var item in changeList)
-    //     {
-    //         var jsonString = JsonSerializer.Serialize(item);
-    //         jsonStringCollection.Append($"Redis.IngestExample.Styles:{item.id} $ {jsonString}");
-    //     }
-    //     
-    //     return $"{jsonStringCollection}";
-    // }
+    [Function("IngestWithInputBiding")]
+    [RedisOutput(Common.RedisConnectionString, "JSON.MSET")]
+    public string Run(
+        [SqlTrigger("[aidemo].[styles]", Common.SQLConnectionString)]
+        IReadOnlyList<SqlChange<Styles>> changes)
+    {
+        try {
+            IEnumerable<Styles> changeList = changes.Select<SqlChange<Styles>, Styles>(change => change.Item);
+        
+            StringBuilder jsonStringCollection = new StringBuilder();
+            
+            foreach (var item in changeList)
+            {
+                var jsonString = JsonSerializer.Serialize(item);
+
+                _logger.LogInformation($"Inside: {jsonString}");
+                jsonStringCollection.Append($"Redis.IngestExample.Styles:{item.id} $ '{jsonString}' ");
+            }
+
+            _logger.LogInformation(jsonStringCollection.ToString());
+            
+            return jsonStringCollection.ToString();
+        }
+        catch(Exception ex) 
+        {
+            _logger.LogError("Error executing RedisOutput binding: {Message}", ex.Message);
+            throw;
+        }
+    }
 }
 
