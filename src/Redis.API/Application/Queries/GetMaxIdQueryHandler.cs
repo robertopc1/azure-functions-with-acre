@@ -26,8 +26,10 @@ public class GetMaxIdQueryHandler : IRequestHandler<GetMaxIdQuery, int>
     public async Task<int> Handle(GetMaxIdQuery message, CancellationToken cancellationToken)
     {
         _logger.LogInformation("----- Getting Max Id: {@Id}", message);
-
-        var id =  _productCollection.Max(x => x.Id); 
+        int id = 0;
+        
+        if(await _productCollection.CountAsync() > 0)
+            id =  _productCollection.Max(x => x.Id); 
 
         return id;
     }

@@ -62,7 +62,7 @@ public class FunctionApp
         }
         catch(Exception ex)
         {
-           // Handle what happens if we fail to Insert in SQL   
+           _logger.LogError($"Error updating SQL record for key {key}: {ex.Message}");
         }
         
         //Log the time that the function was executed.

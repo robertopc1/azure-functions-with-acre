@@ -5,7 +5,7 @@ public class Common
     public const string RedisConnectionString = "ConnectionStrings:RedisConnectionString";
     public const string SQLConnectionString = "ConnectionStrings:SQLConnectionString";
     public const string SubscriptionChannel = "__keyevent@0__:json.set";
-    public const string StoreProcedureUpdate = "[aidemo].spStyles_Update";
+    public const string StoreProcedureUpdate = "[aidemo].spStyles_Upsert";
     public const string TableName = "[aidemo].[styles]";
     public const string Key = "wb-stream";
     
