@@ -18,7 +18,7 @@ RUN dotnet publish "Redis.IngestExample/Redis.IngestExample.csproj" -c Debug -o 
 
 # Runtime stage
 # Use the Azure Functions isolated image
-FROM mcr.microsoft.com/azure-functions/dotnet-isolated:4-dotnet-isolated8.0
+FROM mcr.microsoft.com/azure-functions/dotnet-isolated:4.1040.300-1-dotnet-isolated8.0
 
 # Set environment variables for the function runtime
 ENV AzureWebJobsScriptRoot=/home/site/wwwroot \
