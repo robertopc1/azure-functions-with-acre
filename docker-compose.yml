@@ -27,6 +27,7 @@
       - ConnectionStrings__SQLConnectionString=${SQLConnectionString}
       - ConnectionStrings__RedisConnectionString=${RedisConnectionString}
     depends_on:
+      - redis-stack
       - sql
     networks:
       - sql_network
@@ -63,6 +64,15 @@
       - local.storage.emulator
       - sql
       - redis.api
+      - redis-stack
+    networks:
+      - sql_network
+
+  redis-stack:
+    image: redis/redis-stack-server:latest
+    container_name: redis-stack
+    ports:
+      - "6379:6379"
     networks:
       - sql_network
 
