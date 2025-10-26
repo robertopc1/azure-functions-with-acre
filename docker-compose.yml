@@ -20,7 +20,7 @@
       context: ./src
       additional_contexts:
         datafile: ./infra/sql
-      dockerfile: Redis.API/Dockerfile      
+      dockerfile: Redis.API/Dockerfile
     env_file:
       - .env
     environment:
